@@ -9,7 +9,7 @@ Takes a date and file name, returns an hourly print out of historical weather
 data, including humidity, temperature, wind speed, wind direction, and air pressure
 '''
 
-def print_column_headings(headers, filename):
+def print_column_headings(headers, file_name):
 	with open (file_name, 'wb') as initial_file:
 		w = csv.writer(initial_file, quoting=csv.QUOTE_ALL)
 		w.writerow(headers)
@@ -39,6 +39,7 @@ def print_one_day_of_weather_data(year, month, day, max_rows, file_to_write):
 			month = date_path['mon']
 			day = date_path['mday']
 			hour = date_path['hour']
+			min = date_path['min']
 			humidity = base_path['hum']
 			temp_f = base_path['tempi']
 			windspeed_mph = base_path['wspdi']
@@ -46,8 +47,7 @@ def print_one_day_of_weather_data(year, month, day, max_rows, file_to_write):
 			air_pressure_mb = base_path['pressurem']
 
 			# utc time
-			params = [year, month, day, hour, humidity, temp_f, windspeed_mph, winddir_deg, air_pressure_mb]
-
+			params = [year, month, day, hour, min, humidity, temp_f, windspeed_mph, winddir_deg, air_pressure_mb]
 
 			print params
 
@@ -60,7 +60,7 @@ def print_one_day_of_weather_data(year, month, day, max_rows, file_to_write):
 
 # generate_bj_pollution_data("2014", "02", "02", 100, "beijing-feb-02-2014.csv")
 
-headers = ("Year", "Month", "Day", "Hour", "Humidity", "Temperature (F)", "Windspeed (mph)", "Wind direction (deg)", "Air Pressure (mb)")
+headers = ("Year", "Month", "Day", "Hour", "Min", "Humidity", "Temperature_F", "Windspeed_mph", "Wind_direction_deg", "Air_Pressure_mb")
 
 def append_leading_zeroes(num):
 	return "%02d" % (num,)
@@ -68,16 +68,18 @@ def append_leading_zeroes(num):
 def days_in_a_month(year, month_num):
 	return calendar.monthrange(year, month_num)[1]
 
-def file_namer(city, month_str, year_str): 
-	return city + "-" + month_str + "-" + year_str + ".csv"
+def file_namer(city, month_num, year): 
+	return "raw weather - " + city + "-" + calendar.month_name[month_num] + "-" + str(year) + ".csv"
 
-def gen_entire_month(city, month, year):
-	month_str = str(month)
-	year_str = str(year)
-	file_name = file_namer(city, str(month), str(year))
+def gen_entire_month(city, month, year, should_print_headers):
+	file_name = file_namer(city, month, year)
 
-	for i in range(30, days_in_a_month(year, month) + 1):
-		print_one_day_of_weather_data(year_str, append_leading_zeroes(month), append_leading_zeroes(i), 100, file_name)
-		time.sleep(25)
+	if should_print_headers:
+		print_column_headings(headers, file_name)
 
-gen_entire_month("beijing", 1, 2014)
+	for day in range(12, days_in_a_month(year, month) + 1):
+		print_one_day_of_weather_data(str(year), append_leading_zeroes(month), append_leading_zeroes(day), 100, file_name)		
+		# if we make too many calls in a short period of time, the API refuses are calls
+		time.sleep(60)
+
+gen_entire_month("Beijing", 1, 2014, False)
