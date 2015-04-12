@@ -34,7 +34,7 @@ def print_one_day_of_weather_data(year, month, day, max_rows, file_to_write):
 			return 0
 		else: 
 			base_path = all_obs[n]
-			date_path = base_path['utcdate']
+			date_path = base_path['date']
 			year = date_path['year']
 			month = date_path['mon']
 			day = date_path['mday']
@@ -69,17 +69,17 @@ def days_in_a_month(year, month_num):
 	return calendar.monthrange(year, month_num)[1]
 
 def file_namer(city, month_num, year): 
-	return "raw weather - " + city + "-" + calendar.month_name[month_num] + "-" + str(year) + ".csv"
+	return "raw weather - local time " + city + "-" + calendar.month_name[month_num] + "-" + str(year) + ".csv"
 
-def gen_entire_month(city, month, year, should_print_headers):
+def gen_entire_month(city, month, year, should_print_headers, start_at_day=1):
 	file_name = file_namer(city, month, year)
 
 	if should_print_headers:
 		print_column_headings(headers, file_name)
 
-	for day in range(12, days_in_a_month(year, month) + 1):
+	for day in range(start_at_day, days_in_a_month(year, month) + 1):
 		print_one_day_of_weather_data(str(year), append_leading_zeroes(month), append_leading_zeroes(day), 100, file_name)		
-		# if we make too many calls in a short period of time, the API refuses are calls
+		# if we make too many calls in a short period of time, the API refuses the calls, so pause
 		time.sleep(60)
 
-gen_entire_month("Beijing", 1, 2014, False)
+gen_entire_month("Beijing", 1, 2014, should_print_headers=True)
