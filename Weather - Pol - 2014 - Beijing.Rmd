@@ -1,0 +1,25 @@
+---
+title: "2014 - Weather - Pollution - Beijing"
+author: "Joshua Malina"
+date: "April 19, 2015"
+output: html_document
+---
+
+```{r}
+# get weather
+weather_2014 <- read.table("~/Dropbox/51//final project/cs51-final-project/Weather - Beijing - 2014.csv", header=TRUE, sep=",")
+
+# get pollution
+pollution_2014 <- read.table("~/Dropbox/51//final project/cs51-final-project/bj2014pol.csv", header=TRUE, sep=",")
+
+
+# merge
+library(plyr)
+weather_pollution_2014 <- join(weather_2014, pollution_2014)
+
+# remove rows where pollution values invalid
+weather_pollution_2014 <- weather_pollution_2014[ which(weather_pollution_2014$Value > -1), ]
+
+# write out to csv
+write.csv(weather_pollution_2014, file="weather_pollution_beijing_2014.csv", row.names=FALSE, quote=FALSE)
+```
