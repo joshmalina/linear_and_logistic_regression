@@ -1,11 +1,17 @@
 __author__ = 'Jorge Cotillo'
 
-import Entity.training_set_entity as tse
+import entity.training_set_entity as tse
+import helpers.helpers as hlprs
 
 
 class BinaryLogisticRegression(object):
 
-    def __init__(self):
-        self._trainingSet = tse.TrainingSetEntity(True)
+    #def __init__(self):
 
-   # def get_training_set(self):
+    @staticmethod
+    def get_training_set(self):
+        x_input_variables = ['wind_speed_mph']
+        training_set_list = hlprs.Helpers.get_binary_training_data_from_csv('binary_value.csv',
+                                                                            x_input_variables,
+                                                                            'binary')
+        return training_set_list
