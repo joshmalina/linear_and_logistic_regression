@@ -9,7 +9,7 @@ class Helpers(object):
     @staticmethod
     def get_binary_training_data_from_csv(self, file_name, x_column_names, y_column_name):
         # call pandas
-        raw_result = pd.read_csv(file)
+        raw_result = pd.read_csv(file_name)
         training_set_list = []
 
         # translate csv data into a list of training_set_entity
