@@ -9,6 +9,9 @@ Takes a date and file name, returns an hourly print out of historical weather
 data, including humidity, temperature, wind speed, wind direction, and air pressure
 '''
 
+oldkey = 'a3d4db71573f30f9'
+apikey = '04fce8511db42bb2'
+
 def print_column_headings(headers, file_name):
 	with open (file_name, 'wb') as initial_file:
 		w = csv.writer(initial_file, quoting=csv.QUOTE_ALL)
@@ -18,11 +21,13 @@ def print_column_headings(headers, file_name):
 def print_one_day_of_weather_data(year, month, day, max_rows, file_to_write):
 
 	# get data
-	url = 'http://api.wunderground.com/api/a3d4db71573f30f9/history_' + year + month + day +'/geolookup/q/Beijing/Beijing.json'
+	url = 'http://api.wunderground.com/api/'+apikey+'/history_' + year + month + day +'/geolookup/q/Beijing/Beijing.json'
 	f = urllib2.urlopen(url)
 	print url
 	json_string = f.read()
 	parsed_json = json.loads(json_string)
+
+	print parsed_json
 
 	# paramterize data
 	all_obs = parsed_json['history']['observations']
@@ -45,20 +50,24 @@ def print_one_day_of_weather_data(year, month, day, max_rows, file_to_write):
 			windspeed_mph = base_path['wspdi']
 			winddir_deg = base_path['wdird']
 			air_pressure_mb = base_path['pressurem']
+			metar = base_path['metar']
 
-			# utc time
-			params = [year, month, day, hour, min, humidity, temp_f, windspeed_mph, winddir_deg, air_pressure_mb]
+			if(metar):
+				# utc time
+				params = [year, month, day, hour, min, humidity, temp_f, windspeed_mph, winddir_deg, air_pressure_mb, metar]
 
-			print params
+				print params
+			else:
+				return 0
 
-			with open (file_to_write, 'a') as csvfile:
-				w = csv.writer(csvfile, quoting=csv.QUOTE_ALL)
-				w.writerow(params)
+			# with open (file_to_write, 'a') as csvfile:
+			# 	w = csv.writer(csvfile, quoting=csv.QUOTE_ALL)
+			# 	w.writerow(params)
 
-			csvfile.close()
+			# csvfile.close()
 
 
-# generate_bj_pollution_data("2014", "02", "02", 100, "beijing-feb-02-2014.csv")
+print_one_day_of_weather_data("2014", "01", "01", 30, "test.csv")
 
 headers = ("Year", "Month", "Day", "Hour", "Min", "Humidity", "Temperature_F", "Windspeed_mph", "Wind_direction_deg", "Air_Pressure_mb")
 
@@ -82,4 +91,4 @@ def gen_entire_month(city, month, year, should_print_headers, start_at_day=1):
 		# if we make too many calls in a short period of time, the API refuses the calls, so pause
 		time.sleep(60)
 
-gen_entire_month("Beijing", 1, 2014, should_print_headers=True)
+# gen_entire_month("Beijing", 1, 2014, should_print_headers=True)

@@ -1,0 +1,73 @@
+---
+title: "2014 - Weather - Pollution - Beijing"
+author: "Joshua Malina"
+date: "April 19, 2015"
+output: html_document
+---
+
+```{r}
+# get weather
+weather_2014 <- read.table("~/Dropbox/51//final project/cs51-final-project/Weather - Beijing - 2014.csv", header=TRUE, sep=",")
+
+# get pollution
+pollution_2014 <- read.table("~/Dropbox/51//final project/cs51-final-project/bj2014pol.csv", header=TRUE, sep=",")
+
+
+# merge
+library(plyr)
+weather_pollution_2014 <- join(weather_2014, pollution_2014)
+
+# remove rows where pollution values invalid
+weather_pollution_2014 <- weather_pollution_2014[ which(weather_pollution_2014$Value > -1), ]
+
+# write out to csv
+write.csv(weather_pollution_2014, file="weather_pollution_beijing_2014.csv", row.names=FALSE, quote=FALSE)
+
+# keep only columns that we want to test on
+keep = c("Year", "Month", "Day", "Hour", "temperature_f", "wind_speed_mph", "wind_bearing_deg", "relative_humidity", "visibility_miles_max_10", "pressure_mb", "Value")
+wp = weather_pollution_2014[keep]
+
+# recode all "null" values to NA to be recognized by R
+library(car)
+wp_recoded = sapply(wp, function(x) gsub("[null]", NA, x))
+
+# remove all rows that feature any null values
+wp_remove_null = na.omit(wp_recoded)
+
+# create a binary more polluted / less polluted for simple logistic regression
+wp_remove_null_w_binary = as.data.frame(wp_remove_null)
+wp_remove_null_w_binary = within(wp_remove_null_w_binary, {
+    more_polluted = ifelse(as.numeric(Value) <= 100, 1, 0)
+ })
+
+# write to csv
+write.csv(wp_remove_null_w_binary, file="~/Dropbox/51/final project/cs51-final-project/wp_remove_null_2014_w_binary.csv", row.names=FALSE, quote=FALSE)
+
+# write out to csv
+write.csv(wp_remove_null, file="~/Dropbox/51/final project/cs51-final-project/wp_remove_null_2014.csv", row.names=FALSE, quote=FALSE)
+
+# keep rows the null values, write to csv
+write.csv(wp_recoded, file="~/Dropbox/51/final project/cs51-final-project/wp_cleaned.csv", row.names=FALSE, quote=FALSE)
+
+```
+
+```{r}
+# an attempt to impute missing values
+
+# choose the columns that should be converted to numeric values (currently factors)
+to_convert = c("temperature_f", "wind_speed_mph", "wind_bearing_deg", "relative_humidity", "visibility_miles_max_10", "pressure_mb")
+
+# make the right columns numeric
+wp_numeric[, keep] <- as.numeric(as.character(unlist(wp_recoded[,to_convert])))
+
+# replace all NAs with means from those columns (there shouldn't be any nulls in the target at this point)
+impute <- function(df) {
+  for (i in which(sapply(df, is.numeric))) {
+      df[is.na(df[, i]), i] <- mean(df[, i],  na.rm = TRUE)
+  }
+  return (df)
+}
+
+wp_impute_nas = impute(wp_numeric)
+
+```
