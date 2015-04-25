@@ -1,0 +1,70 @@
+---
+title: "Clean BJ Weather"
+author: "Joshua Malina"
+date: "April 11, 2015"
+output: html_document
+---
+
+# clean weather data for jan 2014
+```{r}
+jan_weather <- read.table("~/Dropbox/51/final project/cs51-final-project/Jan Beijing Weather.csv", header=TRUE, sep=",")
+```
+
+# pollution data for jan 2014
+```{r}
+jan_pol <- read.table("~/Dropbox/51/final project/cs51-final-project/bj2014pol.csv", header=TRUE, sep=",")
+```
+
+# Remove months that are not 12 (late hours of Dec 2013) or 1
+```{r}
+# jan_weather <- subset(jan_weather, Month != 4)
+```
+
+# Remove early garbage rows
+```{r}
+# jan_weather = jan_weather[57:nrow(jan_weather), ]
+```
+
+# Remove duplicate rows
+```{r}
+jan_weather = unique(jan_weather)
+```
+
+# Remove half hour weather readings (pollution data is only measured every hour)
+```{r}
+# jan_weather = jan_weather[seq(1, nrow(jan_weather), 2), ]
+```
+
+# Create list of rows to be deleted
+```{r}
+
+# rows whos min values are 00
+min00 = rownames(jan_weather[ which(jan_weather$Min==0), ])
+
+# as numbers
+min00 = as.numeric(min00)
+
+# delete all of these rows
+f <- function(df) {
+  vector = c()
+  for (n in df) {  
+    if(n == length(df) {
+      stop
+    })
+    current = df[n]
+    anext = df[n+1]    
+      if (current+1=anext) {
+        print("to delete:")
+        print(current)
+        vector <- c(vector, current)
+      }    
+  }
+  return vector
+}
+delete_me = f(min00)
+View(delete_me)
+
+# actually delete
+new_weather = new_weather[-delete_me,]
+View(new_weather)
+```
