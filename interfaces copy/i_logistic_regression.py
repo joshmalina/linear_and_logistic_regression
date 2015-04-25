@@ -1,6 +1,9 @@
 
 class ILogisticRegression(object):
 
+    def predict(self):
+        raise NotImplementedError()
+
     def retrieve_training_set(self):
         raise NotImplementedError()
 

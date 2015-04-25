@@ -8,4 +8,5 @@ class PredictorRunner(object):
     @staticmethod
     def run_algorithm(self):
         br = binary_reg.BinaryLogisticRegression()
+        br.predict()
         return 1

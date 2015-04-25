@@ -13,6 +13,10 @@ class BinaryLogisticRegression(interface.ILogisticRegression):
         if alpha is not None:
             _alpha = alpha
 
+    def predict(self):
+        training_set = self.retrieve_training_set()
+        return 1
+
     def retrieve_training_set(self):
         x_input_variables = ['wind_speed_mph']
         training_set_list = _helpers.Helpers.get_binary_training_data_from_csv('binary_value.csv',
@@ -23,21 +27,21 @@ class BinaryLogisticRegression(interface.ILogisticRegression):
     def get_cost(self):
         return self.get_cost_intern(1, 2, 3)
 
-    @intern
-    def get_cost_intern(self, param1, param2, param3):
+    @staticmethod
+    def __get_cost_intern(self, param1, param2, param3):
         return 2.0
 
     def set_hypothesis(self):
         return self.set_hypothesis_intern(1, 2, 3)
 
-    @intern
-    def set_hypothesis_intern(self, param1, param2, param3):
+    @staticmethod
+    def __set_hypothesis_intern(self, param1, param2, param3):
         return 3.0
 
     def get_gradient_descent(self):
         return self.get_gradient_descent_intern(1, 2, 3)
 
-    @intern
-    def get_gradient_descent_intern(self, param1, param2, param3):
+    @staticmethod
+    def __get_gradient_descent_intern(self, param1, param2, param3):
         return 5.0
 
