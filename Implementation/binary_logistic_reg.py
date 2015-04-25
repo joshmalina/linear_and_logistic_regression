@@ -1,17 +1,43 @@
 __author__ = 'Jorge Cotillo'
 
-import entity.training_set_entity as tse
-import helpers.helpers as hlprs
+import entity.training_set_entity as _tse
+import helpers.helpers as _helpers
+import interfaces.i_logistic_regression as interface
 
 
-class BinaryLogisticRegression(object):
+class BinaryLogisticRegression(interface.ILogisticRegression):
 
-    #def __init__(self):
+    _alpha = 1.0
 
-    @staticmethod
-    def get_training_set(self):
+    def __init__(self, alpha):
+        if alpha is not None:
+            _alpha = alpha
+
+    def retrieve_training_set(self):
         x_input_variables = ['wind_speed_mph']
-        training_set_list = hlprs.Helpers.get_binary_training_data_from_csv('binary_value.csv',
-                                                                            x_input_variables,
-                                                                            'binary')
+        training_set_list = _helpers.Helpers.get_binary_training_data_from_csv('binary_value.csv',
+                                                                               x_input_variables,
+                                                                               'binary')
         return training_set_list
+
+    def get_cost(self):
+        return self.get_cost_intern(1, 2, 3)
+
+    @intern
+    def get_cost_intern(self, param1, param2, param3):
+        return 2.0
+
+    def set_hypothesis(self):
+        return self.set_hypothesis_intern(1, 2, 3)
+
+    @intern
+    def set_hypothesis_intern(self, param1, param2, param3):
+        return 3.0
+
+    def get_gradient_descent(self):
+        return self.get_gradient_descent_intern(1, 2, 3)
+
+    @intern
+    def get_gradient_descent_intern(self, param1, param2, param3):
+        return 4.0
+
