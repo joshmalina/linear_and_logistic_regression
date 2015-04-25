@@ -39,5 +39,5 @@ class BinaryLogisticRegression(interface.ILogisticRegression):
 
     @intern
     def get_gradient_descent_intern(self, param1, param2, param3):
-        return 4.0
+        return 5.0
 
