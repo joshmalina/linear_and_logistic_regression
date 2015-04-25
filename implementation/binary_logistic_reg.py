@@ -42,7 +42,7 @@ class BinaryLogisticRegression(interface.ILogisticRegression):
         return x_cost
 
     def set_hypothesis(self, param1):
-        return 1 + np.exp(-param1)
+        return self.__sigmoid_function(self, param1)
 
     @staticmethod
     def __set_hypothesis_intern(self, param1, param2, param3):

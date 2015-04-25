@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7bdf1c8b-13b9-48af-ac34-62bd4b1fb63a" name="Default" comment="Test pycharm integration">
+    <list default="true" id="7bdf1c8b-13b9-48af-ac34-62bd4b1fb63a" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/implementation/binary_logistic_reg.py" afterPath="$PROJECT_DIR$/implementation/binary_logistic_reg.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -49,8 +49,8 @@
       <file leaf-file-name="binary_logistic_reg.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/implementation/binary_logistic_reg.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.87096775" vertical-offset="210" max-vertical-offset="990">
-              <caret line="41" column="21" selection-start-line="41" selection-start-column="21" selection-end-line="41" selection-end-column="21" />
+            <state vertical-scroll-proportion="0.9032258" vertical-offset="435" max-vertical-offset="990">
+              <caret line="57" column="26" selection-start-line="57" selection-start-column="26" selection-end-line="57" selection-end-column="26" />
               <folding>
                 <element signature="e#30#71#0" expanded="true" />
               </folding>
@@ -626,14 +626,20 @@
       <option name="project" value="LOCAL" />
       <updated>1429930048728</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Adding cost method and fixing the retrieval of data, including x0 always">
+      <created>1430004066517</created>
+      <option name="number" value="00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1430004066517</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="827" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
-      <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3292517" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3292517" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.27891156" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -673,7 +679,8 @@
     </option>
     <MESSAGE value="Adding global variables to binary logistic regression" />
     <MESSAGE value="Test pycharm integration" />
-    <option name="LAST_COMMIT_MESSAGE" value="Test pycharm integration" />
+    <MESSAGE value="Adding cost method and fixing the retrieval of data, including x0 always" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adding cost method and fixing the retrieval of data, including x0 always" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1138,8 +1145,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/implementation/binary_logistic_reg.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.87096775" vertical-offset="210" max-vertical-offset="990">
-          <caret line="41" column="21" selection-start-line="41" selection-start-column="21" selection-end-line="41" selection-end-column="21" />
+        <state vertical-scroll-proportion="0.9032258" vertical-offset="435" max-vertical-offset="990">
+          <caret line="57" column="26" selection-start-line="57" selection-start-column="26" selection-end-line="57" selection-end-column="26" />
           <folding>
             <element signature="e#30#71#0" expanded="true" />
           </folding>
