@@ -7,9 +7,11 @@ class TrainingSetEntity(object):
     # multiple logistic regression where y is not true - false
     # instead is going to be some decimal perhaps
 
-    def __init__(self, init_y):
+    def __init__(self, init_y=None):
         self._x = []
-        self._y = init_y
+        if init_y is not None:
+            self._y = init_y
+        self._y = 0.0
 
     @property
     def get_x(self):
