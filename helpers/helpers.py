@@ -2,7 +2,9 @@ __author__ = 'Jorge Cotillo'
 
 import pandas as pd
 import numpy as np
-import entity.training_set_entity as tse
+import sys
+sys.path.insert(0, '../entity')
+import training_set_entity as tse
 import os
 from StringIO import StringIO
 
@@ -36,10 +38,9 @@ class Helpers(object):
             training_set_list.append(training_set)
         return training_set_list
 
-    '''
-        Takes a column of a numpy array, returns a scaled column; don't apply
-        this to x0 = ones
-    '''
+    # scale features so that gradient descent converges more quickly
+    # doesn't apply to x0 = ones
+    @staticmethod
     def feature_scaler(col): 
         avg = np.mean(col)
         std = np.std(col)

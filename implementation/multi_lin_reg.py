@@ -1,23 +1,23 @@
-__author__ = 'Josh Malina'
+'''
+    Multivariate linear regression using batch vectors. Code inspired by the
+    coursera course, machine learning with Andrew Ng. This program takes any
+    number of parameters, including a single parameter, and outputs a projected
+    pollution value. The linear model makes assumptions about the normality of
+    the data, which may be violated, because we have outliers and
+    collinearility.
+'''
 
-'''
-    Multivariate linear regression using batch vectors. Code inspired by the coursera course, machine learning with Andrew Ng. 
-    This program takes any number of parameters, including a single parameter, and outputs a projected pollution value. The linear
-    model makes assumptions about the normality of the data, which may be violated, because we have outliers. For the given data set,
-    we model the effect of wind speed on pollution value as something like y = -7.34x + 135.93. Not the best model, of course, since 
-    we are only evaluating pollution based on one predictor. Also, not clear that the relationship between pollution and wind speed is
-    strictly linear
-'''
+__author__ = 'Josh Malina'
 
 import pandas as pd
 import numpy as np
 from pylab import *
-import helpers.helpers as hp
+import sys
+sys.path.insert(0, '../helpers')
+import helpers
 
-
+# get data
 df = pd.read_csv('../Data/wp_remove_null_2014.csv', header=0)
-
-# number of training samples
 
 ys = df['Value']
 ys = np.array(ys)
@@ -25,10 +25,10 @@ keep = df[['wind_speed_mph', 'temperature_f', 'pressure_mb', 'visibility_miles_m
 keep.insert(0, 'x0', ([1.0] * len(df)))
 xs = np.array(keep)
 
-xs[:,1] = hp.feature_scaler(xs[:, 1])
-xs[:, 2] = hp.feature_scaler(xs[:, 2])
-xs[:, 3] = hp.feature_scaler(xs[:, 3])
-xs[:, 4] = hp.feature_scaler(xs[:, 4])
+xs[:,1] = helpers.Helpers.feature_scaler(xs[:, 1])
+xs[:, 2] = helpers.Helpers.feature_scaler(xs[:, 2])
+xs[:, 3] = helpers.Helpers.feature_scaler(xs[:, 3])
+xs[:, 4] = helpers.Helpers.feature_scaler(xs[:, 4])
 
 # Initialize theta parameters according to how many features we are evaluating
 theta = zeros(shape=(keep.shape[1], 1))

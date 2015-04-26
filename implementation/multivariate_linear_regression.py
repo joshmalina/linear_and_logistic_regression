@@ -1,0 +1,114 @@
+'''
+    Multivariate linear regression using batch vectors. Code inspired by the
+    coursera course, machine learning with Andrew Ng. This program takes any
+    number of parameters, including a single parameter, and outputs a projected
+    pollution value. The linear model makes assumptions about the normality of
+    the data, which may be violated, because we have outliers and
+    collinearility.
+'''
+
+__author__ = 'Josh Malina'
+
+import pandas as pd
+import numpy as np
+from pylab import *
+import sys
+sys.path.insert(0, '../helpers')
+import helpers
+sys.path.insert(0, '../interfaces')
+import i_multivariate_linear_regression as interface
+
+class MultivariteLinearRegression(interface.IMultivariateLinearRegression):
+
+    def __init__(self):
+
+        _alpha = 0.01
+        _iters = 1500
+
+        _xs, _ys = self.get_data()
+
+        self._theta = self.theta_maker(_xs, _ys, _alpha, _iters)
+
+    def predict(self, x_vector):
+        return x_vector.dot(self._theta)[0]
+
+    def get_data(self):
+
+        # get data
+        df = pd.read_csv('../Data/wp_remove_null_2014.csv', header=0)
+        
+        # get dependent variable
+        ys = df['Value']
+
+        # arrange data
+        ys = np.array(ys)  
+
+        # get linear predictor variables
+        keep = df[['wind_speed_mph', 'temperature_f', 'pressure_mb', 'visibility_miles_max_10']]
+
+        # add an initial column of ones for the cost function   
+        keep.insert(0, 'x0', ([1.0] * len(df)))
+
+        # arrange data
+        xs = np.array(keep)
+
+        # scale all but x0
+        xs[:,1] = helpers.Helpers.feature_scaler(xs[:, 1])
+        xs[:, 2] = helpers.Helpers.feature_scaler(xs[:, 2])
+        xs[:, 3] = helpers.Helpers.feature_scaler(xs[:, 3])
+        xs[:, 4] = helpers.Helpers.feature_scaler(xs[:, 4])
+
+        return xs, ys
+
+    def get_cost(self):
+
+        # build a batch of all predictions
+        all_results = self._xs.dot(self._theta).T
+
+        # build a batch of all corresponding errors
+        all_errors = (all_results - ys) ** 2
+
+        # total error
+        sum_err = sum(all_errors)
+     
+        # dividing by two "makes the math easier"
+        # dividing by length gives us some kind of average error
+        return sum_err / 2 / len(self._ys)
+
+    # gradient descent algorithm for coming up with the right thetas
+    def theta_maker(self, xs, ys, step_size, when_stop):
+
+        # initialize theta parameters according to how many features we are evaluating
+        theta = zeros(shape=(xs.shape[1], 1))
+        
+        num_points = len(ys)
+        num_thetas = len(theta)
+
+        # stop at some arbitrary point when we think we've reached
+        # the minimum
+        for i in range(when_stop):
+
+            # build a vector of predictions for every x given theta
+            # starts at theta == all 0s
+            pred = xs.dot(theta).T
+
+            # build a vector of errors for every prediction
+            # initial errors should distance of points from 0
+            e = pred - ys
+
+            # for every theta term
+            for j in range(0, num_thetas):
+
+                # multiply error by corresponding x value           
+                e_at_given_x = e * xs[:, j]
+
+                # update theta, i.e. step down if positive error / step up if neg error
+                theta[j] -= step_size * sum(e_at_given_x) / num_points
+
+            # print cost_f(xs, ys, theta)
+
+        return theta    
+
+
+g = MultivariteLinearRegression()
+print g._theta
