@@ -50,5 +50,40 @@ class Helpers(object):
 
         return scale(col)
 
+    @staticmethod
+    def feature_list_scaler(xs):
+        num_features = xs.shape[1]
+        # skips first feature, x0 = ones
+        for i in range(1, num_features):
+            xs[:, i] = Helpers.feature_scaler(xs[:, i])
+
+        return xs
+
+    @staticmethod
+    def get_data(path_to, file_name, y_param, x_param_list, scale=False):
+
+        # get data
+        df = pd.read_csv(path_to + file_name, header=0)
+        
+        # get dependent variable
+        ys = df[y_param]
+
+        # arrange data
+        ys = np.array(ys)  
+
+        # get linear predictor variables
+        keep = df[x_param_list]
+
+        # add an initial column of ones for the cost function   
+        keep.insert(0, 'x0', ([1.0] * len(df)))
+
+        # arrange data
+        xs = np.array(keep)
+
+        if(scale):
+            xs = Helpers.feature_list_scaler(xs)
+
+        return xs, ys
+
 
 

@@ -16,22 +16,12 @@ import sys
 sys.path.insert(0, '../helpers')
 import helpers
 
-# get data
-df = pd.read_csv('../Data/wp_remove_null_2014.csv', header=0)
+x_param_list = ['wind_speed_mph', 'temperature_f', 'pressure_mb', 'visibility_miles_max_10']
 
-ys = df['Value']
-ys = np.array(ys)
-keep = df[['wind_speed_mph', 'temperature_f', 'pressure_mb', 'visibility_miles_max_10']]
-keep.insert(0, 'x0', ([1.0] * len(df)))
-xs = np.array(keep)
-
-xs[:,1] = helpers.Helpers.feature_scaler(xs[:, 1])
-xs[:, 2] = helpers.Helpers.feature_scaler(xs[:, 2])
-xs[:, 3] = helpers.Helpers.feature_scaler(xs[:, 3])
-xs[:, 4] = helpers.Helpers.feature_scaler(xs[:, 4])
+xs, ys = helpers.Helpers.get_data('../Data/', 'wp_remove_null_2014.csv', 'Value', x_param_list, True)
 
 # Initialize theta parameters according to how many features we are evaluating
-theta = zeros(shape=(keep.shape[1], 1))
+theta = zeros(shape=(xs.shape[1], 1))
 
 def cost_f(xs, ys, theta):
 
@@ -79,7 +69,7 @@ def theta_maker(xs, ys, theta, step_size, when_stop):
             # update theta, i.e. step down if positive error / step up if neg error
             theta[j] -= step_size * sum(e_at_given_x) / num_points
 
-        print cost_f(xs, ys, theta)
+        # print cost_f(xs, ys, theta)
 
     return theta
 
