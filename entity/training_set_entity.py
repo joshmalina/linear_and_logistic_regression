@@ -15,7 +15,6 @@ class TrainingSetEntity(object):
     def get_x(self):
         return self._x
 
-
     @get_x.setter
     def set_x(self, value):
         self._x = value
