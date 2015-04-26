@@ -21,11 +21,10 @@ class BinaryLogisticRegression(interface.ILogisticRegression):
 
     def retrieve_training_set(self):
         x_input_variables = ['x0', 'wind_speed_mph']
-        training_set_list = _helpers.Helpers.get_binary_training_data_from_csv(
-                                                                        self,
-                                                                        'data/binary_training_set.csv',
-                                                                        x_input_variables,
-                                                                        'binary')
+        training_set_list = _helpers.Helpers.get_binary_training_data_from_csv(self,
+                                                                               'data/binary_training_set.csv',
+                                                                               x_input_variables,
+                                                                               'binary')
         return training_set_list
 
     def get_cost(self, training_set_list):
