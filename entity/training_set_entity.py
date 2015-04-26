@@ -7,14 +7,13 @@ class TrainingSetEntity(object):
     # multiple logistic regression where y is not true - false
     # instead is going to be some decimal perhaps
 
-    def __init__(self, init_y):
+    def __init__(self, init_y=None):
         self._x = []
-        self._y = init_y
+        self._y = 0.0
 
     @property
     def get_x(self):
         return self._x
-
 
     @get_x.setter
     def set_x(self, value):
