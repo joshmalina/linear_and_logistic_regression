@@ -34,29 +34,33 @@ class MultivariteLinearRegression(interface.IMultivariateLinearRegression):
 
     def get_data(self):
 
-        # get data
-        df = pd.read_csv('../Data/wp_remove_null_2014.csv', header=0)
+        # # get data
+        # df = pd.read_csv('../Data/wp_remove_null_2014.csv', header=0)
         
-        # get dependent variable
-        ys = df['Value']
+        # # get dependent variable
+        # ys = df['Value']
 
-        # arrange data
-        ys = np.array(ys)  
+        # # arrange data
+        # ys = np.array(ys)  
 
-        # get linear predictor variables
-        keep = df[['wind_speed_mph', 'temperature_f', 'pressure_mb', 'visibility_miles_max_10']]
+        # # get linear predictor variables
+        # keep = df[['wind_speed_mph', 'temperature_f', 'pressure_mb', 'visibility_miles_max_10']]
 
-        # add an initial column of ones for the cost function   
-        keep.insert(0, 'x0', ([1.0] * len(df)))
+        # # add an initial column of ones for the cost function   
+        # keep.insert(0, 'x0', ([1.0] * len(df)))
 
-        # arrange data
-        xs = np.array(keep)
+        # # arrange data
+        # xs = np.array(keep)
 
-        # scale all but x0
-        xs[:,1] = helpers.Helpers.feature_scaler(xs[:, 1])
-        xs[:, 2] = helpers.Helpers.feature_scaler(xs[:, 2])
-        xs[:, 3] = helpers.Helpers.feature_scaler(xs[:, 3])
-        xs[:, 4] = helpers.Helpers.feature_scaler(xs[:, 4])
+        # # scale all but x0
+        # xs[:,1] = helpers.Helpers.feature_scaler(xs[:, 1])
+        # xs[:, 2] = helpers.Helpers.feature_scaler(xs[:, 2])
+        # xs[:, 3] = helpers.Helpers.feature_scaler(xs[:, 3])
+        # xs[:, 4] = helpers.Helpers.feature_scaler(xs[:, 4])
+
+        x_param_list = ['wind_speed_mph', 'temperature_f', 'pressure_mb', 'visibility_miles_max_10']
+
+        xs, ys = helpers.Helpers.get_data('../Data/', 'wp_remove_null_2014.csv', 'Value', x_param_list, True)
 
         return xs, ys
 
