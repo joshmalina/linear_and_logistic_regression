@@ -9,8 +9,6 @@ class TrainingSetEntity(object):
 
     def __init__(self, init_y=None):
         self._x = []
-        if init_y is not None:
-            self._y = init_y
         self._y = 0.0
 
     @property

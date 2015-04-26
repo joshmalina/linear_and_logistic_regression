@@ -29,7 +29,7 @@ class Helpers(object):
             for ii in range(0, len(x_column_names)):
                 x_input_variables.append(raw_result[x_column_names[ii]].values[i])
             # initialize training set entity and pass a boolean
-            training_set = tse.TrainingSetEntity(None)
+            training_set = tse.TrainingSetEntity()
             training_set.set_x = x_input_variables
             training_set.set_y = raw_result[y_column_name].values[i]
             training_set_list.append(training_set)
