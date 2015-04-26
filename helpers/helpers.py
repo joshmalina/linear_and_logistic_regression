@@ -1,6 +1,7 @@
 __author__ = 'Jorge Cotillo'
 
 import pandas as pd
+import numpy as np
 import entity.training_set_entity as tse
 import os
 from StringIO import StringIO
@@ -34,6 +35,19 @@ class Helpers(object):
             training_set.set_y = raw_result[y_column_name].values[i]
             training_set_list.append(training_set)
         return training_set_list
+
+    '''
+        Takes a column of a numpy array, returns a scaled column; don't apply
+        this to x0 = ones
+    '''
+    def feature_scaler(col): 
+        avg = np.mean(col)
+        std = np.std(col)
+
+        # for each x, subtract by the column mean and divide by the standard dev
+        scale = np.vectorize(lambda x : (x - avg) / std)
+
+        return scale(col)
 
 
 
