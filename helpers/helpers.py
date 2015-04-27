@@ -4,39 +4,55 @@ import pandas as pd
 import numpy as np
 import sys
 sys.path.insert(0, '../entity')
-import training_set_entity as tse
 import os
-from StringIO import StringIO
 
 
 class Helpers(object):
 
     @staticmethod
-    def get_binary_training_data_from_csv(self, file_name, x_column_names, y_column_name):
+    def get_binary_training_data_from_csv(file_name, x_column_names, y_column_name):
 
         # moving up folder, this is because helpers is inside folder helpers, and we want the to retrieve the csv
         # from data folder instead
 
         os.chdir("..")
 
-        # call pandas
-        raw_result = pd.read_csv(file_name)
+        # call pandas and get all the columns
 
-        training_set_list = []
+        # first, temporally append y_column_name into x_column_names in order to retrieve all the columns
+        temp_all_columns = []
+        temp_all_columns.append(x_column_names)
+        temp_all_columns = temp_all_columns.append(y_column_name)
+
+        raw_result = pd.read_csv(file_name, names=temp_all_columns)
+
+        # retrieve only x columns (features)
+        xs = np.matrix(raw_result[x_column_names])
+
+        # get as many ones as m examples exists in our training data
+        ones = np.matrix(np.ones(xs.shape[0])).T
+
+        # append ones to the initial list of x features to conform to n + 1 features
+        xs = np.hstack([ones, xs])
+
+        ys = np.matrix(raw_result[y_column_name]).T
+
+        return xs, ys
+        #training_set_list = []
+
 
         # translate csv data into a list of training_set_entity
-        for i in range(0, len(raw_result)):
+        # for i in range(0, len(raw_result)):
             # x_column_list will contain all the columns we are going to utilize in our equation,
             # for logistic regression this usually is only one input variable
-            x_input_variables = []
-            for ii in range(0, len(x_column_names)):
-                x_input_variables.append(raw_result[x_column_names[ii]].values[i])
-            # initialize training set entity and pass a boolean
-            training_set = tse.TrainingSetEntity()
-            training_set.set_x = x_input_variables
-            training_set.set_y = raw_result[y_column_name].values[i]
-            training_set_list.append(training_set)
-        return training_set_list
+            # x_input_variables = []
+            # for ii in range(0, len(x_column_names)):
+                # x_input_variables.append(raw_result[x_column_names[ii]].values[i])
+            # training_set = tse.TrainingSetEntity()
+            # training_set.set_x = x_input_variables
+            # training_set.set_y = raw_result[y_column_name].values[i]
+            # training_set_list.append(training_set)
+        # return training_set_list
 
     # scale features so that gradient descent converges more quickly
     # doesn't apply to x0 = ones
@@ -64,12 +80,12 @@ class Helpers(object):
 
         # get data
         df = pd.read_csv(path_to + file_name, header=0)
-        
+
         # get dependent variable
         ys = df[y_param]
 
         # arrange data
-        ys = np.array(ys)  
+        ys = np.array(ys)
 
         # get linear predictor variables
         keep = df[x_param_list]
@@ -80,7 +96,7 @@ class Helpers(object):
         # arrange data
         xs = np.array(keep)
 
-        if(scale):
+        if scale:
             xs = Helpers.feature_list_scaler(xs)
 
         return xs, ys
