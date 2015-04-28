@@ -28,7 +28,7 @@ class RegressionAbstract:
     def theta(self, val):
         self._theta = val
 
-    def predict(self, x_vector=None):
+    def predict(self, iterations=1000):
         # get initial x and y matrix
         xs, ys = self.retrieve_training_set()
 
@@ -36,7 +36,7 @@ class RegressionAbstract:
         self.theta = np.matrix(np.zeros(xs.shape[1])).T
 
         # call train algorithm in order to receive theta
-        new_theta = self.train_algorithm(xs, ys, 500000)
+        new_theta = self.train_algorithm(xs, ys, iterations)
 
         return new_theta
 

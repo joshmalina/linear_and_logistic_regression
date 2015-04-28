@@ -1,11 +1,11 @@
 __author__ = 'Jorge Cotillo'
 
 import helpers.helpers as _helpers
-import interfaces.regression_abstract as abstract
+import interfaces.regression_abstract as _abstract
 import numpy as np
 
 
-class BinaryLogisticRegression(abstract.RegressionAbstract):
+class BinaryLogisticRegression(_abstract.RegressionAbstract):
 
     def __init__(self):
         self.alpha = 0.01
@@ -19,7 +19,7 @@ class BinaryLogisticRegression(abstract.RegressionAbstract):
 
     def train_algorithm(self, xs, ys, n):
         if n is None:
-            n = 500000
+            n = 1000
 
         for i in range(n):
             self.theta += self.alpha * self.__gradient(xs, ys)

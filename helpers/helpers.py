@@ -10,7 +10,7 @@ import os
 class Helpers(object):
 
     @staticmethod
-    def get_binary_training_data_from_csv(file_name, x_column_names, y_column_name):
+    def get_binary_training_data_from_csv(file_name, x_column_names, y_column_name, scale=False, omit_header=False):
 
         # moving up folder, this is because helpers is inside folder helpers, and we want the to retrieve the csv
         # from data folder instead
@@ -27,7 +27,10 @@ class Helpers(object):
 
         temp_all_columns.append(y_column_name)
 
-        raw_result = pd.read_csv(file_name, names=temp_all_columns)
+        if omit_header:
+            raw_result = pd.read_csv(file_name, names=temp_all_columns, header=0)
+        else:
+            raw_result = pd.read_csv(file_name, names=temp_all_columns)
 
         # retrieve only x columns (features)
         xs = np.matrix(raw_result[x_column_names])
@@ -37,6 +40,9 @@ class Helpers(object):
 
         # append ones to the initial list of x features to conform to n + 1 features
         xs = np.hstack([ones, xs])
+
+        if scale:
+            xs = Helpers.feature_list_scaler(xs)
 
         ys = np.matrix(raw_result[y_column_name]).T
 
@@ -50,7 +56,7 @@ class Helpers(object):
         std = np.std(col)
 
         # for each x, subtract by the column mean and divide by the standard dev
-        scale = np.vectorize(lambda x : (x - avg) / std)
+        scale = np.vectorize(lambda x: (x - avg) / std)
 
         return scale(col)
 
