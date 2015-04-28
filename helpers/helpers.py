@@ -21,8 +21,11 @@ class Helpers(object):
 
         # first, temporally append y_column_name into x_column_names in order to retrieve all the columns
         temp_all_columns = []
-        temp_all_columns.append(x_column_names)
-        temp_all_columns = temp_all_columns.append(y_column_name)
+
+        for i in range(len(x_column_names)):
+            temp_all_columns.append(x_column_names[i])
+
+        temp_all_columns.append(y_column_name)
 
         raw_result = pd.read_csv(file_name, names=temp_all_columns)
 
@@ -38,21 +41,6 @@ class Helpers(object):
         ys = np.matrix(raw_result[y_column_name]).T
 
         return xs, ys
-        #training_set_list = []
-
-
-        # translate csv data into a list of training_set_entity
-        # for i in range(0, len(raw_result)):
-            # x_column_list will contain all the columns we are going to utilize in our equation,
-            # for logistic regression this usually is only one input variable
-            # x_input_variables = []
-            # for ii in range(0, len(x_column_names)):
-                # x_input_variables.append(raw_result[x_column_names[ii]].values[i])
-            # training_set = tse.TrainingSetEntity()
-            # training_set.set_x = x_input_variables
-            # training_set.set_y = raw_result[y_column_name].values[i]
-            # training_set_list.append(training_set)
-        # return training_set_list
 
     # scale features so that gradient descent converges more quickly
     # doesn't apply to x0 = ones

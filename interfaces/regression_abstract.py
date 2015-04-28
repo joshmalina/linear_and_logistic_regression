@@ -6,8 +6,9 @@ import numpy as np
 class RegressionAbstract:
     __metaclass__ = ABCMeta
 
-    _alpha = 1.0
-    _theta = []
+    def __init__(self):
+        self._alpha = 1.0
+        self._theta = []
 
     @property
     def alpha(self):
@@ -35,10 +36,7 @@ class RegressionAbstract:
         self.theta = np.matrix(np.zeros(xs.shape[1])).T
 
         # call train algorithm in order to receive theta
-        new_theta = self.train_algorithm(xs, ys, 5000)
-
-        # retrieve cost (log likelihood)
-        # cost = self.get_cost(xs, ys)
+        new_theta = self.train_algorithm(xs, ys, 500000)
 
         return new_theta
 
@@ -47,17 +45,5 @@ class RegressionAbstract:
         pass
 
     @abstractmethod
-    def get_cost(self):
-        pass
-
-    @abstractmethod
     def train_algorithm(self, xs, ys, n=None):
-        pass
-
-    @abstractmethod
-    def get_gradient_descent(self, xs=None, ys=None, step_size=None, when_stop=None):
-        pass
-
-    @abstractmethod
-    def set_hypothesis(self):
         pass
