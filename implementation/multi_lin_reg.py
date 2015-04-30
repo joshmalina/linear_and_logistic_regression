@@ -18,7 +18,7 @@ import helpers
 
 x_param_list = ['wind_speed_mph', 'temperature_f', 'pressure_mb', 'visibility_miles_max_10']
 
-xs, ys = helpers.Helpers.get_data('../Data/', 'wp_remove_null_2014.csv', 'Value', x_param_list, True)
+xs, ys = helpers.Helpers.get_data_2('../Data/', 'wp_remove_null_2014.csv', 'Value', x_param_list, True)
 
 # Initialize theta parameters according to how many features we are evaluating
 theta = zeros(shape=(xs.shape[1], 1))
@@ -38,7 +38,7 @@ def cost_f(xs, ys, theta):
     # dividing by length gives us some kind of average error
     return sum_err / 2 / len(ys)
 
-when_stop = 1500
+when_stop = 2500
 # how big of each step
 alpha = 0.01
 
@@ -81,4 +81,6 @@ def hypo(x):
 
 result = hypo(xs[0])
 print result
+
+print cost_f(xs, ys, our_theta)
 
