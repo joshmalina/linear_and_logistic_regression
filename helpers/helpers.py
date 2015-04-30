@@ -61,6 +61,10 @@ class Helpers(object):
 
         return scale(col)
 
+    # @staticmethod
+    # def scale_single_val(val, name):
+
+
     # scale all features
     @staticmethod
     def feature_list_scaler(xs):
@@ -133,7 +137,7 @@ class Helpers(object):
 
         to_both = np.vectorize(lambda x: f(x, divisor))
 
-        return to_both(deg_col)    
+        return to_both(deg_col)
 
 
     @staticmethod
@@ -151,8 +155,6 @@ class Helpers(object):
         ready_set.insert(6, 'cos_wind_dir', cos_wind)
 
         return ready_set
-
-
 
     @staticmethod
     def get_data_2(path_to, file_name, y_param, x_param_list, scale=False):
@@ -174,17 +176,28 @@ class Helpers(object):
 
         keep = Helpers.prep_circular_data(keep)
 
-        #print keep[(22*30):(25*30)]
-
         # arrange data
         xs = np.array(keep)
 
         if scale:
             xs = Helpers.feature_list_scaler(xs)
 
-        # print xs[0]
+        return xs, ys       
 
-        return xs, ys
+    @staticmethod
+    def get_averages():
+
+        x_param_list = ['wind_speed_mph', 'temperature_f', 'pressure_mb', 'visibility_miles_max_10']
+
+        xs, ys = Helpers.get_data_2('../Data/', 'wp_remove_null_2014.csv', 'Value', x_param_list, True)
+
+        full_list = ['x0', 'monthly_sin', 'monthly_cos', 'hourly_sin', 'hourly_cos', 'wind_dir_sin', 'wind_dir_cos', 'wind_speed_mph', 'temperature_f', 'pressure_mb', 'visibility_miles_max_10']
+        
+        averages={}
+        for i in range(0, 11):
+            averages[full_list[i]] = np.mean(xs[:, i])
+        return averages
+
 
 
 
