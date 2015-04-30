@@ -112,104 +112,36 @@ class Helpers(object):
 
         return xs
 
-    # takes a vector of wind_degrees, returns corresponding columns of
-    # sin and cos values
-    # since sin/cos are already in range (-1, 1), don't need to be scaled
-    # also should only be used with other scaled values
-    @staticmethod
-    def get_and_prep_wind_deg(deg_col=None):
-
-        if deg_col is None:
-            deg_col = Helpers.get_single_col('../Data/', 'wp_remove_null_2014.csv', 'wind_bearing_deg')
-
-        # takes a single degree, returns sin/cos
-        def to_sin_cos(deg):
-            rad = math.radians(deg)
-            return math.sin(rad), math.cos(rad)        
-
-        to_both = np.vectorize(lambda x: to_sin_cos(x))
-
-        return to_both(deg_col)
 
     @staticmethod
-    def include_prepped_wind_deg(ready_set):
+    def transform_unit(unit, divisor):
 
-        sines, cosines = Helpers.get_and_prep_wind_deg()
+        def transform(unit):
+            return (2 * math.pi * (unit - .5) / divisor)
 
-        ready_set.insert(1, 'sin_wind_dir', sines)
-        ready_set.insert(2, 'cos_wind_dir', cosines)
-
-        return ready_set
+        return math.sin(transform(unit)), math.cos(transform(unit))
 
     @staticmethod
-    def get_and_prep_hourly_data(deg_col=None):
-
-        if deg_col is None:
-            deg_col = Helpers.get_single_col('../Data/', 'wp_remove_null_2014.csv', 'Hour')
-
-        def calc_sin(hr):
-            return math.sin(2 * math.pi * (hr - .5) / 23)
-
-
-        def calc_cos(hr):
-            return math.cos(2 * math.pi * (hr - .5) / 23)
-
-
-        def to_sin_cos(deg):            
-            return calc_sin(deg), calc_cos(deg) 
-
-        to_both = np.vectorize(lambda x: to_sin_cos(x))
-
-        return to_both(deg_col)
+    def transformWind(deg, divisor=None):
+        rad = math.radians(deg)
+        return math.sin(rad), math.cos(rad)    
 
     @staticmethod
-    def include_prepped_hourly_data(ready_set):
+    def get_and_prep_circular_data2(param, divisor, f):
 
-        sines, cosines = Helpers.get_and_prep_hourly_data()
+        deg_col = Helpers.get_single_col('../Data/', 'wp_remove_null_2014.csv', param)        
 
-        ready_set.insert(1, 'sin_hourly', sines)
-        ready_set.insert(2, 'cos_hourly', cosines)
+        to_both = np.vectorize(lambda x: f(x, divisor))
 
-        return ready_set
-
-
-    @staticmethod
-    def get_and_prep_monthly_data(deg_col=None):
-
-        if deg_col is None:
-            deg_col = Helpers.get_single_col('../Data/', 'wp_remove_null_2014.csv', 'Month')
-
-        def calc_sin(hr):
-            return math.sin(2 * math.pi * (hr - .5) / 11)
-
-        def calc_cos(hr):
-            return math.cos(2 * math.pi * (hr - .5) / 11)
-
-        def to_sin_cos(deg):            
-            return calc_sin(deg), calc_cos(deg) 
-
-        to_both = np.vectorize(lambda x: to_sin_cos(x))
-
-        return to_both(deg_col)
-
-    @staticmethod
-    def include_prepped_monthly_data(ready_set):
-
-        sines, cosines = Helpers.get_and_prep_monthly_data()
-
-        ready_set.insert(1, 'sin_monthly', sines)
-        ready_set.insert(2, 'cos_monthly', cosines)
-
-        return ready_set
+        return to_both(deg_col)    
 
 
     @staticmethod
     def prep_circular_data(ready_set):
 
-        sin_month, cos_month = Helpers.get_and_prep_monthly_data()
-        sin_hour, cos_hour = Helpers.get_and_prep_hourly_data()
-        sin_wind, cos_wind = Helpers.get_and_prep_wind_deg()
-
+        sin_month, cos_month = Helpers.get_and_prep_circular_data2('Month', 12, Helpers.transform_unit)
+        sin_hour, cos_hour = Helpers.get_and_prep_circular_data2('Hour', 24, Helpers.transform_unit)
+        sin_wind, cos_wind = Helpers.get_and_prep_circular_data2('wind_bearing_deg', -999, Helpers.transformWind)
 
         ready_set.insert(1, 'sin_monthly', sin_month)
         ready_set.insert(2, 'cos_monthly', cos_month)
@@ -239,8 +171,6 @@ class Helpers(object):
 
         # add an initial column of ones for the cost function   
         keep.insert(0, 'x0', ([1.0] * len(df)))
-
-
 
         keep = Helpers.prep_circular_data(keep)
 
