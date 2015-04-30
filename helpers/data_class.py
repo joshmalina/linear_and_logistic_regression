@@ -29,8 +29,10 @@ class DataClass(object):
 		features.insert(5, 'sin_wind_dir', sh)
 		features.insert(6, 'cos_wind_dir', ch)
 
-		
-		
+		features.insert(7, 'wind_speed_mph', h.Helpers.feature_scaler(a['wind_speed_mph']))
+		features.insert(8, 'temperature_f', h.Helpers.feature_scaler(a['temperature_f']))
+		features.insert(9, 'pressure_mb', h.Helpers.feature_scaler(a['pressure_mb']))
+		features.insert(10, 'visibility_mi', h.Helpers.feature_scaler(a['visibility_miles_max_10']))
 
 		return features, target 
  
@@ -40,6 +42,9 @@ class DataClass(object):
 	def get_std(self, feature):
 		return np.std(feature)
 
+	def get_features(self):
+		return self._features
+
 	# useful for scaling individual values, as in from new values
 	def scale_val(self, feature, val):
 		return (val - self.get_avg(feature)) / self.get_std(feature)
@@ -48,3 +53,4 @@ class DataClass(object):
 x = DataClass('../Data/wp_remove_null_2014.csv')
 
 print x.get_avg('cos_month')
+print x.get_features()
