@@ -27,6 +27,8 @@ class MultivariteLinearRegression(interface.IMultivariateLinearRegression):
 
         _xs, _ys = self.get_data()
 
+        self._xs, self._ys = _xs, _ys
+
         self._theta = self.theta_maker(_xs, _ys, _alpha, _iters)
 
     def predict(self, x_vector):
@@ -36,7 +38,7 @@ class MultivariteLinearRegression(interface.IMultivariateLinearRegression):
 
         x_param_list = ['wind_speed_mph', 'temperature_f', 'pressure_mb', 'visibility_miles_max_10']
 
-        xs, ys = helpers.Helpers.get_data('../Data/', 'wp_remove_null_2014.csv', 'Value', x_param_list, True)
+        xs, ys = helpers.Helpers.get_data_2('../Data/', 'wp_remove_null_2014.csv', 'Value', x_param_list, True)
 
         return xs, ys
 
@@ -46,7 +48,7 @@ class MultivariteLinearRegression(interface.IMultivariateLinearRegression):
         all_results = self._xs.dot(self._theta).T
 
         # build a batch of all corresponding errors
-        all_errors = (all_results - ys) ** 2
+        all_errors = (all_results - self._ys) ** 2
 
         # total error
         sum_err = sum(all_errors)
@@ -92,3 +94,4 @@ class MultivariteLinearRegression(interface.IMultivariateLinearRegression):
 
 g = MultivariteLinearRegression()
 print g._theta
+print g.get_cost()
