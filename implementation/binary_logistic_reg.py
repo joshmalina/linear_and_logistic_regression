@@ -17,6 +17,9 @@ class BinaryLogisticRegression(_abstract.RegressionAbstract):
                                                                     'polluted')
         return xs, ys
 
+    def theta_maker(self, xs):
+        self.theta = np.matrix(np.zeros(xs.shape[1])).T
+
     def train_algorithm(self, xs, ys, n):
         if n is None:
             n = 1000
