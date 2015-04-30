@@ -66,7 +66,8 @@ class Helpers(object):
     def feature_list_scaler(xs):
         num_features = xs.shape[1]
         # skips first feature, x0 = ones
-        for i in range(1, num_features):
+        # skips first seven features
+        for i in range(7, num_features):
             xs[:, i] = Helpers.feature_scaler(xs[:, i])
 
         return xs
@@ -194,12 +195,31 @@ class Helpers(object):
     @staticmethod
     def include_prepped_monthly_data(ready_set):
 
-        sines, cosines = Helpers.get_and_prep_hourly_data()
+        sines, cosines = Helpers.get_and_prep_monthly_data()
 
         ready_set.insert(1, 'sin_monthly', sines)
         ready_set.insert(2, 'cos_monthly', cosines)
 
         return ready_set
+
+
+    @staticmethod
+    def prep_circular_data(ready_set):
+
+        sin_month, cos_month = Helpers.get_and_prep_monthly_data()
+        sin_hour, cos_hour = Helpers.get_and_prep_hourly_data()
+        sin_wind, cos_wind = Helpers.get_and_prep_wind_deg()
+
+
+        ready_set.insert(1, 'sin_monthly', sin_month)
+        ready_set.insert(2, 'cos_monthly', cos_month)
+        ready_set.insert(3, 'sin_hourly', sin_hour)
+        ready_set.insert(4, 'cos_hourly', cos_hour)
+        ready_set.insert(5, 'sin_wind_dir', sin_wind)
+        ready_set.insert(6, 'cos_wind_dir', cos_wind)
+
+        return ready_set
+
 
 
     @staticmethod
@@ -220,9 +240,11 @@ class Helpers(object):
         # add an initial column of ones for the cost function   
         keep.insert(0, 'x0', ([1.0] * len(df)))
 
-        keep = Helpers.include_prepped_wind_deg(keep)
-        keep = Helpers.include_prepped_hourly_data(keep)
-        keep = Helpers.include_prepped_monthly_data(keep)
+
+
+        keep = Helpers.prep_circular_data(keep)
+
+        #print keep[(22*30):(25*30)]
 
         # arrange data
         xs = np.array(keep)
@@ -230,7 +252,12 @@ class Helpers(object):
         if scale:
             xs = Helpers.feature_list_scaler(xs)
 
+        # print xs[0]
+
         return xs, ys
+
+
+
 
 
 
