@@ -1,1 +1,3 @@
 ignore/
+*.pyc
+*.ph
