@@ -14,9 +14,10 @@ import numpy as np
 from pylab import *
 import sys
 sys.path.insert(0, '../helpers')
-import helpers
+import helpers.helpers as helpers
 sys.path.insert(0, '../interfaces')
-import i_multivariate_linear_regression as interface
+import interfaces.i_multivariate_linear_regression as interface
+
 
 class MultivariteLinearRegression(interface.IMultivariateLinearRegression):
 
@@ -99,3 +100,7 @@ g = MultivariteLinearRegression()
 # print g._theta
 # print g.get_cost()
 # print g.predict(g.get_data()[0][0])
+# g = MultivariteLinearRegression()
+# print g._theta
+# print g.get_cost()
+

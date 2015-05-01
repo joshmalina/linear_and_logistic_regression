@@ -1,3 +1,4 @@
 ignore/
-*.pyc
 *.ph
+.DS_Store
+*.pyc
