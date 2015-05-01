@@ -23,11 +23,14 @@ class MultivariteLinearRegression(interface.IMultivariateLinearRegression):
     def __init__(self):
 
         _alpha = 0.01
-        _iters = 1500
+        _iters = 2500
 
         _xs, _ys = self.get_data()
 
         self._xs, self._ys = _xs, _ys
+
+        #print self._xs[0]
+        # print _xs.dtype.names
 
         self._theta = self.theta_maker(_xs, _ys, _alpha, _iters)
 
@@ -93,5 +96,6 @@ class MultivariteLinearRegression(interface.IMultivariateLinearRegression):
 
 
 g = MultivariteLinearRegression()
-print g._theta
-print g.get_cost()
+# print g._theta
+# print g.get_cost()
+# print g.predict(g.get_data()[0][0])

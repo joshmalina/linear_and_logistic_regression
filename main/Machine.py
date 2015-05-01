@@ -1,22 +1,23 @@
-import lin_reg
+import sys
+sys.path.insert(0, '../implementation')
+import multivariate_linear_regression as mlp
+sys.path.insert(0, '../data_tools')
+import get_one_weather_vector as gv
+import pprint
+import numpy as np
 
-print("Welcome to our machine. Which algorithm would you like to run?")
+print("Welcome to our machine. At the current moment in time, the forecast in beijing is: ")
 
-print("1) univariate linear regression:")
 
-algorithm = input("Your choice: ")
+pprint.pprint(gv.now_weather_readable())
 
-print("Thank you. What parameter would you like to run it on?")
+xs = np.array(gv.raw_on())[:, 0:11]
+# print xs
+# pprint.pprint(mlp.g.get_data()[0][0])
 
-print("1) wind speed")
+# print mlp.g.predict(mlp.g.get_data()[0][0])
 
-parameter = input("Your choice: ")
+print ("Given this data, our multivariate_linear_regression algorithm predicts that the pollution will be:")
 
-print("Thank you for choising wind speed. In Beijing, the wind never reaches higher than 33 mph. \nPlease enter a windspeed of your choosing:")
+print mlp.g.predict(xs)
 
-speed = input("Your choice: ")
-
-pol_val = lin_reg.predict_y_give_x(speed)
-
-print("Our estimate for pollution levels at that speed is: ")
-print(pol_val)

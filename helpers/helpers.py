@@ -61,9 +61,9 @@ class Helpers(object):
 
         return scale(col)
 
-    # @staticmethod
-    # def scale_single_val(val, name):
-
+    @staticmethod
+    def info(col):
+        return np.mean(col), np.std(col)
 
     # scale all features
     @staticmethod
@@ -125,6 +125,16 @@ class Helpers(object):
 
         return math.sin(transform(unit)), math.cos(transform(unit))
 
+
+    @staticmethod
+    def trans(param, divisor, f):
+
+        to_both = np.vectorize(lambda x: f(x, divisor))
+
+        return to_both(param)
+
+
+
     @staticmethod
     def transformWind(deg, divisor=None):
         rad = math.radians(deg)
@@ -183,6 +193,30 @@ class Helpers(object):
             xs = Helpers.feature_list_scaler(xs)
 
         return xs, ys       
+
+
+    @staticmethod
+    def default_vals():
+
+        x_param_list = ['wind_speed_mph', 'temperature_f', 'pressure_mb', 'visibility_miles_max_10']
+
+        xs, ys = Helpers.get_data_2('../Data/', 'wp_remove_null_2014.csv', 'Value', x_param_list, True)
+
+        ws_m, ws_sd = Helpers.info(xs[:, 7])
+        temp_m, temp_sd = Helpers.info(xs[:, 8])
+        pressure_m, pressure_sd = Helpers.info(xs[:, 9])
+        vis_m, vis_sd = Helpers.info(xs[:, 10])
+
+        info = {'ws_m': ws_m, 'ws_sd' : ws_sd, 'temp_m' : temp_m, 'temp_sd' :temp_sd, 
+        'pre_m' : pressure_m, 'pre_sd' : pressure_sd, 'vis_m' : vis_m, 'vis_sd' : vis_sd}
+
+        return info
+
+    @staticmethod
+    def scale(x, m, sd):
+        r = (x - m) / sd
+        print r
+        return r
 
     @staticmethod
     def get_averages():

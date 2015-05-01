@@ -53,7 +53,7 @@ class DataClass(object):
 		return self._features
 
 	# useful for scaling individual values, as in from new values
-	# relies on this class' avg and std
+	# relies on this class' original avg and std
 	def scale_new_val(self, feature, val):
 		avg = np.mean(self._original[feature])
 		std = np.std(self._original[feature])
@@ -62,5 +62,4 @@ class DataClass(object):
 
 # x = DataClass('../Data/wp_remove_null_2014.csv')
 
-# print x.scale_new_val('wind_speed_mph', 5)
-# print x.get_features()
+# print x.get_avg('visibility_mi')

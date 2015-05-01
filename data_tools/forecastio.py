@@ -149,17 +149,16 @@ def gen_entire_month(city, month, year, should_print_headers, start_at_day=1):
 		# if we make too many calls in a short period of time, the API refuses the calls, so pause
 		time.sleep(0)
 
-gen_entire_month("Beijing-no-mb-with-date-data", 4, 2014, should_print_headers=False)
-gen_entire_month("Beijing-no-mb-with-date-data", 5, 2014, should_print_headers=False)
-gen_entire_month("Beijing-no-mb-with-date-data", 6, 2014, should_print_headers=False)
-gen_entire_month("Beijing-no-mb-with-date-data", 7, 2014, should_print_headers=False)
-gen_entire_month("Beijing-no-mb-with-date-data", 8, 2014, should_print_headers=False)
-gen_entire_month("Beijing-no-mb-with-date-data", 9, 2014, should_print_headers=False)
-gen_entire_month("Beijing-no-mb-with-date-data", 10, 2014, should_print_headers=False)
-gen_entire_month("Beijing-no-mb-with-date-data", 11, 2014, should_print_headers=False)
-gen_entire_month("Beijing-no-mb-with-date-data", 12, 2014, should_print_headers=False)
+# gen_entire_month("Beijing-no-mb-with-date-data", 4, 2014, should_print_headers=False)
+# gen_entire_month("Beijing-no-mb-with-date-data", 5, 2014, should_print_headers=False)
+# gen_entire_month("Beijing-no-mb-with-date-data", 6, 2014, should_print_headers=False)
+# gen_entire_month("Beijing-no-mb-with-date-data", 7, 2014, should_print_headers=False)
+# gen_entire_month("Beijing-no-mb-with-date-data", 8, 2014, should_print_headers=False)
+# gen_entire_month("Beijing-no-mb-with-date-data", 9, 2014, should_print_headers=False)
+# gen_entire_month("Beijing-no-mb-with-date-data", 10, 2014, should_print_headers=False)
+# gen_entire_month("Beijing-no-mb-with-date-data", 11, 2014, should_print_headers=False)
+# gen_entire_month("Beijing-no-mb-with-date-data", 12, 2014, should_print_headers=False)
 
-def 
 
 
 
