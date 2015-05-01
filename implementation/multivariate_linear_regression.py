@@ -14,9 +14,9 @@ import numpy as np
 from pylab import *
 import sys
 sys.path.insert(0, '../helpers')
-import helpers.helpers as helpers
+import helpers
 sys.path.insert(0, '../interfaces')
-import interfaces.i_multivariate_linear_regression as interface
+import i_multivariate_linear_regression as interface
 
 
 class MultivariteLinearRegression(interface.IMultivariateLinearRegression):

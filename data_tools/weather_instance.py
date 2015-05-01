@@ -6,7 +6,8 @@ import helpers as h
 sys.path.insert(0, '../helpers/data_class')
 from dataclass import *
 sys.path.insert(0, '../interfaces')
-import forecastio
+from api import api
+api = api()
 
 # inherit from the DataClass, which will be useful when
 # we have missing fields
@@ -21,7 +22,7 @@ class WeatherInstance(DataClass):
 		onez = np.ones((1, 11))
 		features = pd.DataFrame(onez)
 
-		date = forecastio.get_correct_date(d['time'])
+		date = api.get_correct_date(d['time'])
 
 		# use weather data to transform and insert monthly circular data
 		sm, cm = h.Helpers.trans([date.month], 12, h.Helpers.transform_unit)
