@@ -10,7 +10,7 @@ import pandas as pd
 import numpy as np
 from pylab import *
 
-df = pd.read_csv('wp_remove_null_2014.csv', header=0)
+df = pd.read_csv('../Data/wp_remove_null_2014.csv', header=0)
 
 # number of training samples
 
