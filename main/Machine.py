@@ -1,11 +1,18 @@
+# josh environment
 import sys
 sys.path.insert(0, '../implementation')
 import multivariate_linear_regression as mlp
 sys.path.insert(0, '../data_tools')
 import get_one_weather_vector as gv
+import binary_logistic_reg as binary_log_reg
+
+# jorge environment
+# import data_tools.get_one_weather_vector as gv
+# import implementation.binary_logistic_reg as binary_log_reg
+# import implementation.multivariate_linear_regression as mlp
+
 import pprint
 import numpy as np
-import binary_logistic_reg as binary_log_reg
 # import data_tools.forecastio as forecast
 
 print("Welcome to our machine. At the current moment in time, the forecast in beijing is: ")
