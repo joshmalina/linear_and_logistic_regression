@@ -76,11 +76,11 @@ def theta_maker(xs, ys, theta, step_size, when_stop):
 our_theta = theta_maker(xs, ys, theta, alpha, when_stop)
 print our_theta
 
-def hypo(x):
-    return x.dot(our_theta)[0]
+# def hypo(x):
+#     return x.dot(our_theta)[0]
 
-result = hypo(xs[0])
-print result
+# result = hypo(xs[0])
+# print result
 
 print cost_f(xs, ys, our_theta)
 
