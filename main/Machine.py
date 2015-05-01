@@ -11,9 +11,8 @@ import binary_logistic_reg as binary_log_reg
 # import implementation.binary_logistic_reg as binary_log_reg
 # import implementation.multivariate_linear_regression as mlp
 
-import pprint
+# common
 import numpy as np
-# import data_tools.forecastio as forecast
 
 print("Welcome to our machine. At the current moment in time, the forecast in beijing is: ")
 print(gv.now_weather_readable())
