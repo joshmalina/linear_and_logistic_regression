@@ -1,7 +1,17 @@
 __author__ = 'Jorge Cotillo'
 
+# josh environment
+# import sys
+# sys.path.insert(0, '../interfaces')
+# sys.path.insert(0, '../helpers')
+# import helpers as _helpers
+# import regression_abstract as _abstract
+
+# jorge environment
 import helpers.helpers as _helpers
 import interfaces.regression_abstract as _abstract
+
+# common
 import numpy as np
 
 
