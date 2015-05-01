@@ -18,42 +18,45 @@ ys = df['Value']
 
 # hypothesis function
 def hypo(x, theta_0, theta_1):
-	return theta_0 + (theta_1 * x)
+    return theta_0 + (theta_1 * x)
+
 
 # cost function
 def cost_f(theta_0, theta1, xs, ys):
+    sum = 0
+    for x, y in zip(xs, ys):
+        # the sum of all the errors squared
+        sum += (((theta_0 + (theta_1 * x)) - y) ** 2)
+    # divided in half and by the number of guesses
+    return sum / (2 * num_guesses)
 
-	sum = 0
-	for x,y in zip(xs,ys):
-		# the sum of all the errors squared
-		sum += (((theta_0 + (theta_1 * x)) - y) ** 2) 
-	# divided in half and by the number of guesses
-	return sum / (2 * num_guesses)
 
 # alpha is the size of the step downwards into trough (toggle for coarser or finer steps)
 def gradient_descent_of_two_variables(alpha, xs, ys, stop_converging, org_theta0, org_theta1):
+    temp_theta_0 = 0
+    temp_theta_1 = 0
 
-	temp_theta_0 = 0
-	temp_theta_1 = 0
+    # repeat until convergence
+    for i in range(0, stop_converging):
+        # calculate the error at each point
+        for x, y in zip(xs, ys):
+            temp_theta_0 += (((y - (org_theta0 * x + org_theta1)) / len(xs)) * alpha)
+            temp_theta_1 += (((y - (org_theta0 * x + org_theta1)) * x / len(xs)) * alpha)
 
-	# repeat until convergence
-	for i in range(0, stop_converging): 
-		# calculate the error at each point
-		for x,y in zip(xs,ys):
-			temp_theta_0 += (((y - (org_theta0*x + org_theta1)) / len(xs)) * alpha)
-			temp_theta_1 += (((y - (org_theta0*x + org_theta1)) * x / len(xs)) * alpha)
+        org_theta0 = temp_theta_0
+        org_theta1 = temp_theta_1
 
-		org_theta0 = temp_theta_0
-		org_theta1 = temp_theta_1
+    print "my coeffs:"
+    print org_theta0, org_theta1
+    return org_theta0, org_theta1
 
-	print "my coeffs:"
-	print org_theta0, org_theta1
-	return org_theta0, org_theta1
 
 a = gradient_descent_of_two_variables(0.1, xs, ys, 100, 0, 0)
 
+
 def q(theta0, theta1, x):
-	return (theta0 * x) + theta1
+    return (theta0 * x) + theta1
+
 
 def gradient_descent_runner(xs, ys, starting_b, starting_m, learning_rate, num_iterations):
     b = starting_b
@@ -61,6 +64,7 @@ def gradient_descent_runner(xs, ys, starting_b, starting_m, learning_rate, num_i
     for i in range(num_iterations):
         b, m = step_gradient(b, m, xs, ys, learning_rate)
     return [b, m]
+
 
 aaa = gradient_descent_runner(xs, ys, 0, 0, .1, 100)
 
@@ -74,7 +78,7 @@ print aaa[0] + aaa[1] * 4.96
 
 
 
-#print predict_y_give_x(4.96)
+# print predict_y_give_x(4.96)
 
 # import matplotlib.pyplot as plt  
 

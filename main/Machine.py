@@ -1,22 +1,36 @@
-import lin_reg
+import implementation.binary_logistic_reg as binary_log_reg
+import implementation.multivariate_linear_regression as multivariate_lin_reg
+import data_tools.forecastio as forecast
 
 print("Welcome to our machine. Which algorithm would you like to run?")
 
-print("1) univariate linear regression:")
-
+print("1) Linear regression:")
+print("2) Multivariate linear regression")
+print("3) Binary logistic regression:")
 algorithm = input("Your choice: ")
 
-print("Thank you. What parameter would you like to run it on?")
+regressionAlgorithm = None
+if algorithm == 2:
+    print("Thank you. What parameter would you like to run it on?")
 
-print("1) wind speed")
+    print("1) wind speed")
 
-parameter = input("Your choice: ")
+    parameter = input("Your choice: ")
 
-print("Thank you for choising wind speed. In Beijing, the wind never reaches higher than 33 mph. \nPlease enter a windspeed of your choosing:")
+    print("Thank you for choosing wind speed. In Beijing, the wind never reaches higher than 33 mph. \nPlease enter a "
+          "wind speed of your choosing:")
 
-speed = input("Your choice: ")
+    speed = input("Your choice: ")
 
-pol_val = lin_reg.predict_y_give_x(speed)
+    # pol_val = lin_reg.predict_y_give_x(speed)
+    regressionAlgorithm = multivariate_lin_reg.MultivariteLinearRegression()
+elif algorithm == 3:
+    regressionAlgorithm = binary_log_reg.BinaryLogisticRegression()
+
+prediction = regressionAlgorithm.predict()
 
 print("Our estimate for pollution levels at that speed is: ")
-print(pol_val)
+print(prediction)
+
+print("The actual pollution levels at that speed is: (Tweeter feed)")
+forecast.gen_entire_month("Beijing-no-mb-with-date-data", 5, 2015, should_print_headers=False)

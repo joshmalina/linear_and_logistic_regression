@@ -33,7 +33,7 @@ class RegressionAbstract:
         xs, ys = self.retrieve_training_set()
 
         # now that we know the length of the sample data (observations) let's proceed to initialize theta matrix
-        self.theta_maker()
+        self.theta_maker(xs)
 
         # call train algorithm in order to receive theta
         new_theta = self.train_algorithm(xs, ys, iterations)
