@@ -1,10 +1,10 @@
 # josh environment
 import sys
 sys.path.insert(0, '../implementation')
-import multivariate_linear_regression as mlp
+import implementation.multivariate_linear_regression as mlp
 sys.path.insert(0, '../data_tools')
-import get_one_weather_vector as gv
-import binary_logistic_reg as binary_log_reg
+import data_tools.get_one_weather_vector as gv
+import implementation.binary_logistic_reg as binary_log_reg
 
 # jorge environment
 # import data_tools.get_one_weather_vector as gv

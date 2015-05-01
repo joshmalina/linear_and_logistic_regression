@@ -16,7 +16,7 @@ import sys
 sys.path.insert(0, '../helpers')
 import helpers
 sys.path.insert(0, '../interfaces')
-import i_multivariate_linear_regression as interface
+import interfaces.i_multivariate_linear_regression as interface
 
 
 class MultivariteLinearRegression(interface.IMultivariateLinearRegression):

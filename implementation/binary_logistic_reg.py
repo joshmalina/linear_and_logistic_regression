@@ -8,7 +8,7 @@ __author__ = 'Jorge Cotillo'
 # import regression_abstract as _abstract
 
 # jorge environment
-import helpers.helpers as _helpers
+import helpers as _helpers
 import interfaces.regression_abstract as _abstract
 
 # common
